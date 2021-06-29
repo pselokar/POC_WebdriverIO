@@ -1,0 +1,25 @@
+{
+  "name": "webdriver-io",
+  "version": "1.0.0",
+  "description": "This is webdriverio practise",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Padmakar Selokar",
+  "license": "ISC",
+  "devDependencies": {
+    "@wdio/allure-reporter": "^7.7.3",
+    "@wdio/jasmine-framework": "^7.7.3",
+    "@wdio/junit-reporter": "^7.7.3",
+    "@wdio/local-runner": "^7.7.4",
+    "@wdio/selenium-standalone-service": "^7.7.4",
+    "@wdio/spec-reporter": "^7.7.3",
+    "local-runner": "^0.1.1-alpha",
+    "webdriverio": "^7.7.4"
+  },
+  "dependencies": {
+    "@wdio/cli": "^7.7.4",
+    "extend": "^3.0.2"
+  }
+}
