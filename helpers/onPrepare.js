@@ -5,7 +5,6 @@ var launchpadPageJson = require("../testData/launchpadPage.json");
 async function ensureConsumeHome() {
     await loginPage.navigateToBaseUrl();
     await loginPage.loginToMcmp();
-    expect(await launchpadPage.getMCMPHeaderTitle()).toBe(launchpadPageJson.mcmpHeaderText);
 }
 
 module.exports = {
