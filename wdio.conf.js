@@ -1,3 +1,5 @@
+const allure = require('allure-commandline')
+
 exports.config = {
     //
     // ====================
@@ -135,7 +137,11 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec','junit',['allure', {outputDir: 'allure-results'}]],
+    reporters: ['spec','junit',['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+    }]],
     
     //
     // Options to be passed to Jasmine.
@@ -193,8 +199,10 @@ exports.config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {Object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
-    // },
+     before: async function () {
+        var launchBrowser = require("./helpers/onPrepare.js");        
+        await launchBrowser.ensureConsumeHome();
+    },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {String} commandName hook command name
@@ -234,6 +242,15 @@ exports.config = {
         }
     },
 
+    /**
+     * Function in afterStep Hook to capture screenshot in case of failures
+     */
+
+    afterStep: function (test, scenario, { error, duration, passed }) {
+        if (error) {
+          browser.takeScreenshot();
+        }
+      },
 
     /**
      * Hook that gets executed after the suite has ended
@@ -275,8 +292,26 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
-    // },
+     onComplete: function() {
+        const reportError = new Error('Could not generate Allure report')
+        const generation = allure(['generate', 'allure-results', '--clean'])
+        return new Promise((resolve, reject) => {
+            const generationTimeout = setTimeout(
+                () => reject(reportError),
+                5000)
+
+            generation.on('exit', function(exitCode) {
+                clearTimeout(generationTimeout)
+
+                if (exitCode !== 0) {
+                    return reject(reportError)
+                }
+
+                console.log('Allure report successfully generated')
+                resolve()
+            })
+        })
+    }
     /**
     * Gets executed when a refresh happens.
     * @param {String} oldSessionId session ID of the old session
