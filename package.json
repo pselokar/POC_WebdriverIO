@@ -19,6 +19,7 @@
     "webdriverio": "^7.7.4"
   },
   "dependencies": {
+    "allure-commandline": "^2.13.8",
     "@wdio/cli": "^7.7.4",
     "extend": "^3.0.2"
   }
