@@ -9,7 +9,7 @@ var appUtils = require("../../common-utils/appUtils.js");
 
 describe('Sanity Tests for MCMP', function(){
     
-    beforeAll(function(){
+    beforeAll(async function(){
         expect(await launchpadPage.getMCMPHeaderTitle()).toBe(launchpadPageJson.mcmpHeaderText);
     });
 

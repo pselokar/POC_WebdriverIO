@@ -10,11 +10,6 @@ var appUtils = require("../../common-utils/appUtils.js");
 describe('E2E Tests for MCMP', function(){
     
     beforeAll(async function(){
-        await appUtils.navigateToBaseUrl();
-    });
-
-    it('Login to MCMP', async function(){
-        await loginPage.loginToMcmp();
         expect(await launchpadPage.getMCMPHeaderTitle()).toBe(launchpadPageJson.mcmpHeaderText);
     });
 
