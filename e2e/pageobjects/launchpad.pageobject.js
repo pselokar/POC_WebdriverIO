@@ -57,8 +57,8 @@ launchpadPage.prototype.checkLeftNavButtonStatus = async function(leftNavBtnText
 
 // Click on Left navigation button
 launchpadPage.prototype.clickLeftNavButton = async function(leftNavBtnText){
-    const leftNavBtns = await $$(this.leftNavButtonsCss);
-    await leftNavBtns[0].waitForClickable({ timeout: 10000 });
+    const leftNavBtns = await $(this.leftNavButtonsCss);
+    await leftNavBtns.waitForClickable({ timeout: 10000 });
     const leftNavBtn = await this.leftNavBtnTextXpath.format(leftNavBtnText);
     const leftNavBtnXpath = await $(leftNavBtn);
     await leftNavBtnXpath.waitForClickable({ timeout: 10000 });
@@ -68,8 +68,8 @@ launchpadPage.prototype.clickLeftNavButton = async function(leftNavBtnText){
 
 // Click on Left navigation link
 launchpadPage.prototype.clickLeftNavLink = async function(leftNavLinkText){
-    const leftNavLinks = await $$(this.leftNavLinksCss);
-    await leftNavLinks[0].waitForClickable({ timeout: 10000 });
+    const leftNavLinks = await $(this.leftNavLinksCss);
+    await leftNavLinks.waitForClickable({ timeout: 10000 });
     const leftNavLink = await this.leftNavLinkTextXpath.format(leftNavLinkText);
     const leftNavLinkXpath = await $(leftNavLink);
     await leftNavLinkXpath.waitForClickable({ timeout: 10000 });
