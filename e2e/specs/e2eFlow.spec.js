@@ -7,20 +7,16 @@ var catalogPageJson =  require("../../testData/catalogPage.json");
 var ordersPageJson =  require("../../testData/ordersPage.json");
 var appUtils = require("../../common-utils/appUtils.js");
 
-describe('Sanity Tests for MCMP', function(){
+describe('E2E Tests for MCMP', function(){
     
     beforeAll(async function(){
         expect(await launchpadPage.getMCMPHeaderTitle()).toBe(launchpadPageJson.mcmpHeaderText);
     });
 
-    it('Go to Catalog page', async function(){
+    it('Go to Catalog page and order a service', async function(){
         await catalogPage.open();
         expect(await catalogPage.getTitleText()).toBe(catalogPageJson.titleText);
+        await catalogPage.selectProvider("Azure");
     });
 
-    it('Go to Approve orders page', async function(){
-        await ordersPage.open();
-        expect(await ordersPage.getTitleText()).toBe(ordersPageJson.titleText);
-    });
-
-})
+});

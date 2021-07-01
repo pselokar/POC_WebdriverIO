@@ -1,3 +1,6 @@
 {
-    "mcmpHeaderText": "IBM Services for Multicloud Management"
+    "mcmpHeaderText": "IBM Services for Multicloud Management",
+    "enterpriseMarketplaceButtonLabel": "Enterprise Marketplace",
+    "catalogLinkLabel": "Catalog",
+    "approveOrdersLinkLabel": "Approve Orders"
 }

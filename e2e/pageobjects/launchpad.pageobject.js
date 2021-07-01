@@ -1,10 +1,15 @@
 var extend = require("extend");
+var appUtils = require("../../common-utils/appUtils");
 
 var defaultConfig = {
     mcmpHeaderTitleTextCss: ".bx--header__name__title",
     hamburgerMenuBtnCss: "ibm-hamburger button",
-    leftNavButtonsTextCss: ".bx--side-nav__submenu-title",
-    leftNavLinksCss: ".bx--side-nav__link"
+    leafNavBtnsSectionCss: ".bx--side-nav__items",
+    leftNavButtonsCss: ".bx--side-nav__submenu",
+    leftNavBtnTextXpath: "//*[@class='bx--side-nav__submenu']//*[text()='{0}']",
+    leftNavBtnXpath: "//*[@class='bx--side-nav__submenu-title' and text()='{0}']/parent::button",
+    leftNavLinksCss: ".bx--side-nav__link",
+    leftNavLinkTextXpath: "//*[@class='bx--side-nav__link']//*[contains(text(),'{0}')]"
 };
 
 function launchpadPage(selectorConfig) {
@@ -18,6 +23,7 @@ function launchpadPage(selectorConfig) {
     }
 }
 
+// Get MCMP Launchpad page Title text
 launchpadPage.prototype.getMCMPHeaderTitle = async function(){
     const mcmpHeaderTitle = await $(this.mcmpHeaderTitleTextCss);
     await mcmpHeaderTitle.waitForEnabled({ timeout: 10000 });
@@ -26,55 +32,49 @@ launchpadPage.prototype.getMCMPHeaderTitle = async function(){
     return headerText;
 }
 
+// Click on hamberger menu button
 launchpadPage.prototype.clickOnHambergerButton = async function(){
+    await appUtils.switchToDefaultContent();
     const hambergerBtn = await $(this.hamburgerMenuBtnCss);
-    await hambergerBtn.waitForClickable({ timeout: 10000 });
+    await hambergerBtn.waitForClickable({ timeout: 30000 });
     await hambergerBtn.click();
     console.log("Clicked on hamberger menu button..");
 }
 
-launchpadPage.prototype.getListOfLeftNavButtonsText = async function(){
-    var textArray = [];
-    const leftNavBtns = await $$(this.leftNavButtonsTextCss);
-    await leftNavBtns[0].waitForClickable({ timeout: 10000 });
-    await leftNavBtns.filter(async element => {
-        var buttonText = await element.getText();
-        console.log("Button Text: "+buttonText);
-        textArray.push(buttonText);
-    });
-    return textArray;
-}
-
-launchpadPage.prototype.clickLeftNavButton = async function(leftNavBtnText){
-    const leftNavBtns = await $$(this.leftNavButtonsTextCss);
-    await leftNavBtns[0].waitForClickable({ timeout: 10000 });
-
-    await this.getListOfLeftNavButtonsText().then(function(buttonTextArray){
-        console.log("Buttons text array: "+buttonTextArray);
-    });
-    for(var i=0; i<buttonTextArray.length; i++){
-        console.log("Comparing '" + buttonTextArray[i] + "' with "+leftNavBtnText);
-        if(buttonTextArray[i] == leftNavBtnText){
-            await leftNavBtns[i].click();
-            console.log("Clicked on "+leftNavBtnText+" left navigation button..");
-            return;
-        }
+// Check if Left navigation button is expanded or not
+launchpadPage.prototype.checkLeftNavButtonStatus = async function(leftNavBtnText){
+    await this.clickLeftNavButton(leftNavBtnText);
+    const leftNavBtn = await $(this.leftNavBtnXpath.format(leftNavBtnText));
+    await leftNavBtn.waitForEnabled({ timeout: 10000 });
+    let status = await leftNavBtn.getAttribute('aria-expanded');
+    if(status == "true"){
+        console.log("'"+leftNavBtnText+"' button already expanded");
+    }
+    else{
+        await this.clickLeftNavButton(leftNavBtnText);
     }
 }
 
+// Click on Left navigation button
+launchpadPage.prototype.clickLeftNavButton = async function(leftNavBtnText){
+    const leftNavBtns = await $(this.leftNavButtonsCss);
+    await leftNavBtns.waitForClickable({ timeout: 10000 });
+    const leftNavBtn = await this.leftNavBtnTextXpath.format(leftNavBtnText);
+    const leftNavBtnXpath = await $(leftNavBtn);
+    await leftNavBtnXpath.waitForClickable({ timeout: 10000 });
+    await leftNavBtnXpath.click();
+    console.log("Clicked on '"+leftNavBtnText+"' left navigation button..");
+}
+
+// Click on Left navigation link
 launchpadPage.prototype.clickLeftNavLink = async function(leftNavLinkText){
-    const leftNavLinks = await $$(this.leftNavLinksCss);
-    await leftNavLinks[0].waitForClickable({ timeout: 10000 });
-    await leftNavLinks.every(async element => {
-        linkText = await element.getText();
-        console.log("Comparing '" + linkText + "' with "+leftNavLinkText);
-        if(linkText.includes(leftNavLinkText)){
-            await element.click();
-            console.log("Clicked on "+leftNavLinkText+" left navigation button..");
-            return false;
-        }
-        return true;
-    });
+    const leftNavLinks = await $(this.leftNavLinksCss);
+    await leftNavLinks.waitForClickable({ timeout: 10000 });
+    const leftNavLink = await this.leftNavLinkTextXpath.format(leftNavLinkText);
+    const leftNavLinkXpath = await $(leftNavLink);
+    await leftNavLinkXpath.waitForClickable({ timeout: 10000 });
+    await leftNavLinkXpath.click();
+    console.log("Clicked on '"+leftNavLinkText+"' left navigation link..");
 }
 
 module.exports = new launchpadPage();

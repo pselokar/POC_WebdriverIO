@@ -26,7 +26,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './e2e/specs/**/*.js'
+        './e2e/specs/e2eFlow.spec.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -48,7 +48,7 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -59,7 +59,7 @@ exports.config = {
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
-        maxInstances: 5,
+        maxInstances: 1,
         //
         browserName: 'chrome',
         acceptInsecureCerts: true
@@ -137,7 +137,7 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec','junit',['allure', {
+    reporters: ['spec',['allure', {
         outputDir: 'allure-results',
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
@@ -293,24 +293,24 @@ exports.config = {
      * @param {<Object>} results object containing test results
      */
      onComplete: function() {
-        const reportError = new Error('Could not generate Allure report')
-        const generation = allure(['generate', 'allure-results', '--clean'])
+        const reportError = new Error('Could not generate Allure report');
+        const generation = allure(['generate', 'allure-results', '--clean']);
         return new Promise((resolve, reject) => {
             const generationTimeout = setTimeout(
                 () => reject(reportError),
-                5000)
+                15000);
 
             generation.on('exit', function(exitCode) {
-                clearTimeout(generationTimeout)
+                clearTimeout(generationTimeout);
 
                 if (exitCode !== 0) {
-                    return reject(reportError)
+                    return reject(reportError);
                 }
 
-                console.log('Allure report successfully generated')
-                resolve()
-            })
-        })
+                console.log('Allure report successfully generated');
+                resolve();
+            });
+        });
     }
     /**
     * Gets executed when a refresh happens.
