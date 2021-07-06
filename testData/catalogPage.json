@@ -1,3 +1,5 @@
 {
-    "titleText": "Catalog"
+    "titleText": "Catalog",
+    "catalogDetailsBreadcrumbText": "Details",
+    "placeOrderBreadcrumbText": "Place Order"
 }

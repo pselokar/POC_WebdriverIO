@@ -24,6 +24,7 @@ function loginPage(selectorConfig) {
 loginPage.prototype.loginToMcmp = async function () {
     const username = await $(this.usernameCss);
     await username.waitForEnabled({ timeout: 30000 });
+    await username.clearValue();
     await username.setValue(loginTestJson.username);
     console.log("Entered username: "+loginTestJson.username);
     const continueBtn = await $(this.continueBtnCss);
@@ -32,6 +33,7 @@ loginPage.prototype.loginToMcmp = async function () {
     console.log("Clicked on continue button..");
     const password = await $(this.passwordCss);
     await password.waitForEnabled({ timeout: 30000 });
+    await password.clearValue();
     await password.setValue(loginTestJson.password);
     console.log("Entered password..");
     const loginBtn = await $(this.loginBtnCss);
