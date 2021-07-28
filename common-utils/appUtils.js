@@ -4,7 +4,6 @@ async function navigateToBaseUrl(){
     await browser.url("/");
     await browser.maximizeWindow();
     console.log("Navigated to baseurl..");
-    // await browser.pause(5000);
 }
 
 // Navigate to Specific URL
@@ -35,9 +34,21 @@ async function switchToDefaultContent(){
     console.log("Switched to Default content");
 }
 
+/**
+ * This function Generates a random string for a specific character length
+ */
+ function getRandomString(charLength) {
+	var randomText = "";
+	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	for (var i = 0; i < charLength; i++)
+		randomText += possible.charAt(Math.floor(Math.random() * possible.length));
+	return randomText;
+}
+
 module.exports = {
     navigateToBaseUrl : navigateToBaseUrl,
     navigateToUrl : navigateToUrl,
     switchToFrameById: switchToFrameById,
-    switchToDefaultContent: switchToDefaultContent
+    switchToDefaultContent: switchToDefaultContent,
+    getRandomString: getRandomString
 }

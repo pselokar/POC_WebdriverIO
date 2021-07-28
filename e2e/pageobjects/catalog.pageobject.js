@@ -8,7 +8,8 @@ var defaultConfig = {
     providerCheckboxesXpath: "//*[@class='bx--checkbox-label-text']/parent::label",
     categoriesListCss: ".category-internal-container a",
     searchInputCss: "#search__input-store-catalog-search-id",
-    templateCardCss: ".card-service-title",
+    templateCardTitleCss: ".card-service-title",
+    templateCardXpath: "//h4[normalize-space()='{0}']//ancestor::*[@class='bx--tile']",
     templateHeaderTitleTextCss: ".ibm--page-header__title",
     currentBreadcrumbTextCss: ".bx--breadcrumb-item--current",
     configureButtonCss: "#configure-service"
@@ -49,9 +50,10 @@ catalogPage.prototype.selectProvider = async function(providerName){
     await providerCheckbox.waitForClickable({ timeout: 60000 });
 
     const providerCheckboxes = await $$(this.providerCheckboxesXpath);
-    await providerCheckboxes.map(async function(element){
+    return await providerCheckboxes.map(async function(element){
         var text = await element.getText();
         if(text.includes(providerName)){
+            await element.waitForClickable({ timeout: 60000 });
             return await element.click().then(function(){
                 console.log("Selected provider: '"+providerName+"'");
             });
@@ -65,9 +67,10 @@ catalogPage.prototype.selectCategory = async function(categoryName){
     await category.waitForClickable({ timeout: 60000 });
 
     const categories = await $$(this.categoriesListCss);
-    await categories.map(async function(element){
+    return await categories.map(async function(element){
         var text = await element.getText();
         if(text.includes(categoryName)){
+            await element.waitForClickable({ timeout: 60000 });
             return await element.click().then(function(){
                 console.log("Selected category: '"+categoryName+"'");
             });
@@ -88,15 +91,18 @@ catalogPage.prototype.searchTemplate = async function(templateName){
 
 // Click on template card
 catalogPage.prototype.clickOnTemplateCard = async function(templateName){
-    const templateCard = await $(this.templateCardCss);
-    await templateCard.waitForClickable({ timeout: 60000 });
+    var self = this;
+    const templateCardTitle = await $(this.templateCardTitleCss);
+    await templateCardTitle.waitForDisplayed({ timeout: 60000 });
     
-    const templateCards = await $$(this.templateCardCss);
-    await templateCards.map(async function(element){
+    const templateCardTitles = await $$(this.templateCardTitleCss);
+    return await templateCardTitles.map(async function(element){
         await element.scrollIntoView();
         var text = await element.getText();
-        if(text.includes(templateName)){
-            return await element.click().then(function(){
+        if(text === templateName){
+            const templateCard = await $(self.templateCardXpath.format(text));
+            await templateCard.waitForClickable({ timeout: 60000 });
+            return await templateCard.click().then(function(){
                 console.log("Clicked on template : '"+templateName+"'");
             });
         }
@@ -106,7 +112,7 @@ catalogPage.prototype.clickOnTemplateCard = async function(templateName){
 // Get Template Title text from Catalog details page
 catalogPage.prototype.getTemplateTitleText = async function(){
     const titleText = await $(this.templateHeaderTitleTextCss);
-    await titleText.waitForClickable({ timeout: 60000 });
+    await titleText.waitForDisplayed({ timeout: 60000 });
 
     return await titleText.getText().then(function(text){
         console.log("Title text on Catalog Details page: '"+text.trim()+"'");
@@ -117,7 +123,7 @@ catalogPage.prototype.getTemplateTitleText = async function(){
 // Get Breadcrumb text from Catalog details page
 catalogPage.prototype.getCurrentBreadcrumbText = async function(){
     const breadcrumbText = await $(this.currentBreadcrumbTextCss);
-    await breadcrumbText.waitForClickable({ timeout: 60000 });
+    await breadcrumbText.waitForDisplayed({ timeout: 60000 });
 
     return await breadcrumbText.getText().then(function(text){
         console.log("Current Breadcrumb text on Catalog Details page: '"+text.trim()+"'");

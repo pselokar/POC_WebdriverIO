@@ -41,7 +41,7 @@ loginPage.prototype.loginToMcmp = async function () {
     await loginBtn.click();
     console.log("Clicked on login button..");
     const privacyAcceptBtn = await $(this.privacyAcceptBtnCss);
-    await privacyAcceptBtn.waitForClickable({ timeout: 30000 });
+    await privacyAcceptBtn.waitForClickable({ timeout: 60000 });
     await privacyAcceptBtn.click();
     console.log('Clicked on "Privacy: I accept" button');
 };

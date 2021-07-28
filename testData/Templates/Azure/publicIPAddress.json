@@ -1,5 +1,0 @@
-{
-    "blueprintName": "Public IP Address",
-    "provider": "Azure",
-    "category": "Network"
-}

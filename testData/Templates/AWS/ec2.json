@@ -1,0 +1,103 @@
+{
+    "bluePrintName": "Elastic Compute Cloud (EC2)",
+    "descriptiveText": "The Amazon Elastic Compute Cloud (EC2) service creates virtual computers in the cloud. Users create, access, and terminate these computers as needed, paying for only the compute capacity used.",
+    "provider": "Amazon",
+    "category": "Compute",
+    "Order Parameters": {
+      "Main Parameters": {
+        "Service Instance Prefix": {
+          "type": "Textbox",
+          "id": "text-input-main_params-serviceName",
+          "value": "TestAutomation"
+        },
+        "Team": {
+          "type": "RadioButton",
+          "id": "radio-button-team_TEAM1",
+          "value": "TEAM1"
+        },
+        "Environment": {
+          "type": "DropdownSearch",
+          "id": "env",
+          "value": "NONE"
+        },
+        "Application": {
+          "type": "DropdownSearch",
+          "id": "app",
+          "value": "NONE"
+        },
+        "Provider Account": {
+          "type": "RadioButton",
+          "id": "radio-button-providerAccount_AWS-TEAM1_/ AWS-TEAM1",
+          "value": "AWS-TEAM1 / AWS-TEAM1"
+        }
+      },
+      "Configure Region": {
+        "AWS Region": {
+          "type": "Dropdown",
+          "id": "bx--dropdown-single-parent_AWS::Region",
+          "value": "ap-south-1 | Asia Pacific (Mumbai)"
+        },
+        "Resource Name": {
+          "type": "Textbox",
+          "id": "text-input-resourceName",
+          "value": "autoResourceName"
+        }
+      },
+      "Configure InstanceType": {
+        "Image Search": {
+          "type": "TextboxSearch",
+          "id": "bx--typeahead-search_imageName",
+          "value": "ubuntu"
+        }
+      },
+      "Configure Instance": {
+        "Availability Zone": {
+          "type": "Dropdown",
+          "id": "bx--dropdown-single-parent_availabilityZone",
+          "value": "ap-south-1b"
+        },
+        "VPC": {
+          "type": "Dropdown",
+          "id": "bx--dropdown-single-parent_selectVPC",
+          "value": "vpc-3a2bdf53 (Default)"
+        },
+        "Subnet": {
+          "type": "Dropdown",
+          "id": "bx--dropdown-single-parent_mySubnetIDs",
+          "value": "subnet-003a0b4a | ap-south-1b"
+        },
+        "IAM Role": {
+          "type": "Dropdown",
+          "id": "bx--dropdown-single-parent_IAMrole",
+          "value": "None"
+        }
+      },
+      "Advanced Details": {
+      },
+      "Configure Root Device": {
+      },
+      "Configure Storage": {
+      },
+      "Configure Security Group": {
+        "Group Name": {
+          "type": "Textbox",
+          "id": "text-input-groupName",
+          "value": "TestGrpname"
+        },
+        "Group Description": {
+          "type": "Textbox",
+          "id": "text-input-groupDescription",
+          "value": "Security group for automation testing"
+        }
+      },
+      "Configure SSH": {
+        "Key Pair": {
+          "type": "Dropdown",
+          "id": "bx--dropdown-single-parent_SSHKeyName",
+          "value": "Proceed without a key pair"
+        }
+      },
+      "Configure Addons": {
+      }
+    }
+  }
