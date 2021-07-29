@@ -1,3 +1,5 @@
+var logGenerator = require("../../common-utils/logGenerator.js"),
+    logger = logGenerator.getApplicationLogger();
 var launchpadPage = require("../pageobjects/launchpad.pageobject.js");
 var catalogPage = require("../pageobjects/catalog.pageobject.js");
 var placeOrderPage = require("../pageobjects/placeOrder.pageobject.js");
@@ -28,7 +30,7 @@ describe('E2E Tests for MCMP', function(){
         expect(await catalogPage.getTemplateTitleText()).toBe(ec2Json.bluePrintName);
         await catalogPage.clickOnConfigureButton();
         expect(await catalogPage.getCurrentBreadcrumbText()).toBe(catalogPageJson.placeOrderBreadcrumbText);
-        console.log("Modified param map: "+ JSON.stringify(modifiedParamMap));
+        logger.info("Modified param map: "+ JSON.stringify(modifiedParamMap));
         await orderUtils.fillOrderDetails(ec2Json, modifiedParamMap);
         await placeOrderPage.submitOrder();
     });

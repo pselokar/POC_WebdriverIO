@@ -1,3 +1,5 @@
+var logGenerator = require("../../common-utils/logGenerator.js"),
+    logger = logGenerator.getApplicationLogger();
 var extend = require("extend");
 var appUtils = require("../../common-utils/appUtils");
 
@@ -28,7 +30,7 @@ launchpadPage.prototype.getMCMPHeaderTitle = async function(){
     const mcmpHeaderTitle = await $(this.mcmpHeaderTitleTextCss);
     await mcmpHeaderTitle.waitForEnabled({ timeout: 10000 });
     var headerText = await mcmpHeaderTitle.getText();
-    console.log("MCMP Header text is: " + headerText);
+    logger.info("MCMP Header text is: " + headerText);
     return headerText;
 }
 
@@ -38,7 +40,7 @@ launchpadPage.prototype.clickOnHambergerButton = async function(){
     const hambergerBtn = await $(this.hamburgerMenuBtnCss);
     await hambergerBtn.waitForClickable({ timeout: 30000 });
     await hambergerBtn.click();
-    console.log("Clicked on hamberger menu button..");
+    logger.info("Clicked on hamberger menu button..");
 }
 
 // Check if Left navigation button is expanded or not
@@ -48,7 +50,7 @@ launchpadPage.prototype.checkLeftNavButtonStatus = async function(leftNavBtnText
     await leftNavBtn.waitForEnabled({ timeout: 10000 });
     let status = await leftNavBtn.getAttribute('aria-expanded');
     if(status == "true"){
-        console.log("'"+leftNavBtnText+"' button already expanded");
+        logger.info("'"+leftNavBtnText+"' button already expanded");
     }
     else{
         await this.clickLeftNavButton(leftNavBtnText);
@@ -63,7 +65,7 @@ launchpadPage.prototype.clickLeftNavButton = async function(leftNavBtnText){
     const leftNavBtnXpath = await $(leftNavBtn);
     await leftNavBtnXpath.waitForClickable({ timeout: 10000 });
     await leftNavBtnXpath.click();
-    console.log("Clicked on '"+leftNavBtnText+"' left navigation button..");
+    logger.info("Clicked on '"+leftNavBtnText+"' left navigation button..");
 }
 
 // Click on Left navigation link
@@ -74,7 +76,7 @@ launchpadPage.prototype.clickLeftNavLink = async function(leftNavLinkText){
     const leftNavLinkXpath = await $(leftNavLink);
     await leftNavLinkXpath.waitForClickable({ timeout: 10000 });
     await leftNavLinkXpath.click();
-    console.log("Clicked on '"+leftNavLinkText+"' left navigation link..");
+    logger.info("Clicked on '"+leftNavLinkText+"' left navigation link..");
 }
 
 module.exports = new launchpadPage();

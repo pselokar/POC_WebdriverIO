@@ -1,3 +1,5 @@
+var logGenerator = require("../common-utils/logGenerator.js"),
+    logger = logGenerator.getApplicationLogger();
 const placeOrderPage =  require("../e2e/pageobjects/placeOrder.pageobject.js");
 
 async function fillOrderDetails(jsonTemplate, modifiedParamMap) {
@@ -26,7 +28,7 @@ async function fillOrderDetails(jsonTemplate, modifiedParamMap) {
                     await textbox.scrollIntoView();
                     await textbox.clearValue().then(async function(){
                         await textbox.setValue(elementValue).then(function(){
-                            console.log("Entered " + elementValue + " in " + fieldName + " textbox");
+                            logger.info("Entered " + elementValue + " in " + fieldName + " textbox");
                         });
                     });
                 }
@@ -36,7 +38,7 @@ async function fillOrderDetails(jsonTemplate, modifiedParamMap) {
                     await radioButton.waitForEnabled({ timeout: 60000 });
                     await radioButton.scrollIntoView();
                     await radioButton.click().then(function(){
-                        console.log("Selected " + elementValue + " radio button for " + fieldName);
+                        logger.info("Selected " + elementValue + " radio button for " + fieldName);
                     });
                 }
                 if(elementType == "DropdownSearch"){
@@ -45,13 +47,13 @@ async function fillOrderDetails(jsonTemplate, modifiedParamMap) {
                     await dropdownBtn.waitForEnabled({ timeout: 60000 });
                     await dropdownBtn.scrollIntoView();
                     await dropdownBtn.click().then(async function(){
-                        console.log("Clicked on "+fieldName+" dropdown button..");
+                        logger.info("Clicked on "+fieldName+" dropdown button..");
                         var dropdownValueLoc = "//*[@id='"+elementID+"']//li/button[normalize-space()='"+elementValue+"']";
                         const dropdownValue = await $(dropdownValueLoc);
                         await dropdownValue.waitForDisplayed({ timeout: 60000 });
                         await dropdownValue.scrollIntoView();
                         await dropdownValue.click().then(function(){
-                            console.log("Selected "+elementValue+" from "+fieldName+" dropdown");
+                            logger.info("Selected "+elementValue+" from "+fieldName+" dropdown");
                         });
                     });
                 }
@@ -61,13 +63,13 @@ async function fillOrderDetails(jsonTemplate, modifiedParamMap) {
                     await dropdownBtn.waitForEnabled({ timeout: 60000 });
                     await dropdownBtn.scrollIntoView();
                     await dropdownBtn.click().then(async function(){
-                        console.log("Clicked on "+fieldName+" dropdown button..");
+                        logger.info("Clicked on "+fieldName+" dropdown button..");
                         var dropdownValueLoc = "//*[@id='"+elementID+"']//li/button[normalize-space()='"+elementValue+"']";
                         const dropdownValue = await $(dropdownValueLoc);
                         await dropdownValue.waitForDisplayed({ timeout: 60000 });
                         await dropdownValue.scrollIntoView();
                         await dropdownValue.click().then(function(){
-                            console.log("Selected "+elementValue+" from "+fieldName+" dropdown");
+                            logger.info("Selected "+elementValue+" from "+fieldName+" dropdown");
                         });
                     });
                 }
@@ -78,14 +80,14 @@ async function fillOrderDetails(jsonTemplate, modifiedParamMap) {
                     await textbox.scrollIntoView();
                     await textbox.clearValue().then(async function(){
                         await textbox.setValue(elementValue).then(async function(){
-                            console.log("Searching " + elementValue + " in " + fieldName + " textbox");
+                            logger.info("Searching " + elementValue + " in " + fieldName + " textbox");
                             var searchedOptions = "//*[@id='"+elementID+"']//button[@class='bx--dropdown-link']";
                             // Click first option from the list
                             const searchOption = await $(searchedOptions);
                             await searchOption.waitForDisplayed({ timeout: 60000 });
                             await searchOption.scrollIntoView();
                             searchOption.click().then(function(){
-                                console.log("Selected first value from "+fieldName);
+                                logger.info("Selected first value from "+fieldName);
                             });
                         });
                     });

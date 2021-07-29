@@ -1,3 +1,5 @@
+var logGenerator = require("../../common-utils/logGenerator.js"),
+    logger = logGenerator.getApplicationLogger();
 var extend = require("extend");
 const appUtils = require("../../common-utils/appUtils");
 
@@ -22,15 +24,14 @@ placeOrderPage.prototype.clickNextButton = async function(){
     const nextBtn = await $(this.nextButtonXpath);
     await nextBtn.waitForClickable({ timeout: 60000 });
     await nextBtn.click();
-    console.log("Clicked on next button..");
-    await appUtils.waitForLoaderToDisappear();
+    logger.info("Clicked on next button..");
 }
 
 placeOrderPage.prototype.submitOrder = async function(){
     const submitBtn = await $(this.submitOrderCss);
     await submitBtn.waitForClickable({ timeout: 60000 });
     await submitBtn.click();
-    console.log("Clicked on Submit order button..");
+    logger.info("Clicked on Submit order button..");
 }
 
 module.exports = new placeOrderPage();

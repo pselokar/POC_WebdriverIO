@@ -1,3 +1,5 @@
+var logGenerator = require("../../common-utils/logGenerator.js"),
+    logger = logGenerator.getApplicationLogger();
 var extend = require("extend");
 var launchpadPage = require("./launchpad.pageobject.js");
 var launchpadPageJson = require("../../testData/launchpadPage.json");
@@ -39,7 +41,7 @@ catalogPage.prototype.getTitleText = async function(){
     const titleText = await $(this.titleTextCss);
     await titleText.waitForDisplayed({ timeout: 30000 });
     return await titleText.getText().then(function(text){
-        console.log("Title text for Catalog page: '"+text.trim()+"'");
+        logger.info("Title text for Catalog page: '"+text.trim()+"'");
         return text.trim();
     });
 }
@@ -55,7 +57,7 @@ catalogPage.prototype.selectProvider = async function(providerName){
         if(text.includes(providerName)){
             await element.waitForClickable({ timeout: 60000 });
             return await element.click().then(function(){
-                console.log("Selected provider: '"+providerName+"'");
+                logger.info("Selected provider: '"+providerName+"'");
             });
         }
     });
@@ -72,7 +74,7 @@ catalogPage.prototype.selectCategory = async function(categoryName){
         if(text.includes(categoryName)){
             await element.waitForClickable({ timeout: 60000 });
             return await element.click().then(function(){
-                console.log("Selected category: '"+categoryName+"'");
+                logger.info("Selected category: '"+categoryName+"'");
             });
         }
     });
@@ -85,7 +87,7 @@ catalogPage.prototype.searchTemplate = async function(templateName){
 
     await searchInput.clearValue();
     await searchInput.setValue(templateName).then(function(){
-        console.log("Searched template: '"+templateName+"'");
+        logger.info("Searched template: '"+templateName+"'");
     });
 }
 
@@ -103,7 +105,7 @@ catalogPage.prototype.clickOnTemplateCard = async function(templateName){
             const templateCard = await $(self.templateCardXpath.format(text));
             await templateCard.waitForClickable({ timeout: 60000 });
             return await templateCard.click().then(function(){
-                console.log("Clicked on template : '"+templateName+"'");
+                logger.info("Clicked on template : '"+templateName+"'");
             });
         }
     });
@@ -115,7 +117,7 @@ catalogPage.prototype.getTemplateTitleText = async function(){
     await titleText.waitForDisplayed({ timeout: 60000 });
 
     return await titleText.getText().then(function(text){
-        console.log("Title text on Catalog Details page: '"+text.trim()+"'");
+        logger.info("Title text on Catalog Details page: '"+text.trim()+"'");
         return text.trim();
     });
 }
@@ -126,7 +128,7 @@ catalogPage.prototype.getCurrentBreadcrumbText = async function(){
     await breadcrumbText.waitForDisplayed({ timeout: 60000 });
 
     return await breadcrumbText.getText().then(function(text){
-        console.log("Current Breadcrumb text on Catalog Details page: '"+text.trim()+"'");
+        logger.info("Current Breadcrumb text on Catalog Details page: '"+text.trim()+"'");
         return text.trim();
     });
 }
@@ -137,7 +139,7 @@ catalogPage.prototype.clickOnConfigureButton = async function(){
     await configureBtn.waitForClickable({ timeout: 60000 });
 
     return await configureBtn.click().then(function(){
-        console.log("Clicked on configure button..");
+        logger.info("Clicked on configure button..");
     });
 }
 
