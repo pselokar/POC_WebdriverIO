@@ -1,3 +1,5 @@
+var logGenerator = require("../../common-utils/logGenerator.js"),
+    logger = logGenerator.getApplicationLogger();
 var extend = require("extend");
 var launchpadPage = require("./launchpad.pageobject.js");
 var launchpadPageJson = require("../../testData/launchpadPage.json");
@@ -31,7 +33,7 @@ ordersPage.prototype.getTitleText = async function(){
     const titleText = await $(this.titleTextCss);
     await titleText.waitForDisplayed({ timeout: 30000 });
     let text = await titleText.getText();
-    console.log("Title text for Approve Orders page: "+text.trim());
+    logger.info("Title text for Approve Orders page: "+text.trim());
     return text.trim();
 }
 

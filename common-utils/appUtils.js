@@ -1,15 +1,17 @@
+var logGenerator = require("../common-utils/logGenerator.js"),
+    logger = logGenerator.getApplicationLogger();
 
 // Navigate to Base URL
 async function navigateToBaseUrl(){
     await browser.url("/");
     await browser.maximizeWindow();
-    console.log("Navigated to baseurl..");
+    logger.info("Navigated to baseurl..");
 }
 
 // Navigate to Specific URL
 async function navigateToUrl(url){
     await browser.url("/" + url);
-    console.log("Navigated to url: /" + url);
+    logger.info("Navigated to url: /" + url);
     await browser.pause(5000);
 }
 
@@ -25,13 +27,13 @@ String.prototype.format = function () {
 async function switchToFrameById(frameId){
     const frameLoc = await $("#"+frameId);
     await browser.switchToFrame(frameLoc);
-    console.log("Switched to iframe/frame: "+frameId);
+    logger.info("Switched to iframe/frame: "+frameId);
 }
 
 // Switch to default content
 async function switchToDefaultContent(){
     browser.switchToFrame(null);
-    console.log("Switched to Default content");
+    logger.info("Switched to Default content");
 }
 
 /**

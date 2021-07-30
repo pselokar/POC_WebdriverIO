@@ -1,4 +1,6 @@
-const allure = require('allure-commandline')
+const allure = require('allure-commandline');
+var logGenerator = require("./common-utils/logGenerator.js"),
+    logger = logGenerator.getApplicationLogger();
 
 exports.config = {
     //
@@ -75,7 +77,8 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'warn',
+    logLevel: 'info',
+    outputDir: 'wdio-logs',
     //
     // Set specific log levels per logger
     // loggers:
@@ -307,7 +310,7 @@ exports.config = {
                     return reject(reportError);
                 }
 
-                console.log('Allure report successfully generated');
+                logger.info('Allure report successfully generated');
                 resolve();
             });
         });
