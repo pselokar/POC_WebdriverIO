@@ -1,6 +1,37 @@
-const allure = require('allure-commandline');
+const allure = require('allure-commandline')
+const slack = require('wdio-slack-service')
+const video = require('wdio-video-reporter')
 var logGenerator = require("./common-utils/logGenerator.js"),
     logger = logGenerator.getApplicationLogger();
+
+var browser = process.env.Browser,
+	environment = process.env.ENV,
+	username = process.env.Email,
+	password = process.env.Password,
+	isProvisioningRequired = process.env.isProvisioningRequired,
+	isDummyAdapterDisabled = process.env.isDummyAdapterDisabled
+
+if(browser == null)
+browser = "chrome"
+if(environment == null)
+environment = "mcmp-stagedal-master-autoui.multicloud-ibm.com"
+if(username == null)
+username = ""
+if(password == null)
+password = ""
+if(isProvisioningRequired == null)
+isProvisioningRequired = "true";
+if(isDummyAdapterDisabled == null)
+isDummyAdapterDisabled = "false";
+
+
+console.log("******Printing Environment Variables*******")
+console.log("Test browser: "+browser)
+console.log("Test environment: "+environment)
+console.log("Username: "+username)
+console.log("Provisioning: "+isProvisioningRequired)
+console.log("isDummyAdapterDisabled: "+isDummyAdapterDisabled)
+console.log("*******************************************")
 
 exports.config = {
     //
@@ -102,7 +133,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://mcmp-customer1-release-autoui.multicloud-ibm.com',
+    baseUrl: 'https://mcmp-stagedal-master-autoui.multicloud-ibm.com',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 60000,
@@ -118,7 +149,21 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['selenium-standalone'],
+    services: [ ['selenium-standalone', 
+        { drivers: { firefox: '0.29.1', chrome: '92.0.4515.107', chromiumedge: 'latest' } },
+            {args: {
+            version: "3.141.59",
+            seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
+            },
+        }
+        ],
+        [slack, {
+        webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
+        notifyOnlyOnFailure: false, // Send notification only on test failure
+        messageTitle: "Webdriverio execution results"+" =============================="+
+        "App URL: "+ environment, // Name of the notification
+        }]
+    ],  
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -142,9 +187,19 @@ exports.config = {
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: ['spec',['allure', {
         outputDir: 'allure-results',
-        disableWebdriverStepsReporting: true,
+        disableWebdriverStepsReporting: false,
         disableWebdriverScreenshotsReporting: false,
-    }]],
+    }],['junit', {
+        outputDir: './reports',
+        outputFileFormat: function (options) {
+         return 'results.xml';
+        },
+    }],
+    [video, {
+        saveAllVideos: false,       // If true, also saves videos for successful test cases
+        videoSlowdownMultiplier: 3, // Higher to get slower videos, lower for faster videos [Value 1-100]
+      }],
+    ],
     
     //
     // Options to be passed to Jasmine.
@@ -203,8 +258,16 @@ exports.config = {
      * @param {Object}         browser      instance of created browser/device session
      */
      before: async function () {
+        var appUtils = require("./common-utils/appUtils.js");
         var launchBrowser = require("./helpers/onPrepare.js");        
+        var reportsPath = "./reports";   
+        var allurereportsPath = "./allure-report";
+        var allureresultsPath = "./allure-results";
+        await appUtils.clearDirectory(reportsPath);   
+        await appUtils.clearDirectory(allurereportsPath); 
+        await appUtils.clearDirectory(allureresultsPath); 
         await launchBrowser.ensureConsumeHome();
+        
     },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -239,17 +302,17 @@ exports.config = {
     /**
      * Function to be executed after a test (in Mocha/Jasmine).
      */
-    afterTest: function(test, context, { error, result, duration, passed, retries }) {
-        if (!passed) {
-            browser.takeScreenshot();
-        }
-    },
+    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
+    //     if (!passed) {
+    //         browser.takeScreenshot();
+    //       }
+    // },
 
     /**
      * Function in afterStep Hook to capture screenshot in case of failures
      */
 
-    afterStep: function (test, scenario, { error, duration, passed }) {
+     afterStep: function (test, scenario, { error, duration, passed }) {
         if (error) {
           browser.takeScreenshot();
         }

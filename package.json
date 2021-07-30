@@ -16,12 +16,14 @@
     "@wdio/selenium-standalone-service": "^7.8.0",
     "@wdio/spec-reporter": "^7.7.3",
     "local-runner": "^0.1.1-alpha",
+    "wdio-slack-service": "^2.0.9",
     "webdriverio": "^7.7.4"
   },
   "dependencies": {
     "@wdio/cli": "^7.7.4",
     "allure-commandline": "^2.13.8",
     "extend": "^3.0.2",
-    "log4js": "^6.3.0"
+    "log4js": "^6.3.0",
+    "wdio-video-reporter": "^3.1.2"
   }
 }
