@@ -125,31 +125,6 @@ global.postToSlack = function (){
     });
 };
 
-global.generateHTMLReport = function (configFileName){
-    return new Promise(()=>{
-        var browserName, browserVersion;
-        var capsPromise = browser.getCapabilities();
-
-        capsPromise.then(function (caps) {
-            browserName = caps.get('browserName');
-            browserVersion = caps.get('version');
-
-            var HTMLReport = require('protractor-html-reporter');
-
-            testConfig = {
-                reportTitle: 'Test Execution Report for '+configFileName,
-                outputPath: './testreports/',
-                screenshotPath: './testreports/screenshots',
-                testBrowser: browserName,
-                browserVersion: browserVersion,
-                modifiedSuiteName: false,
-                screenshotsOnlyOnFailure: true
-            };
-            new HTMLReport().from('./testreports/junitresults.xml', testConfig);
-        });
-    });
-
-};
 
 module.exports = {
     postToSlack : postToSlack,
