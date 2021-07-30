@@ -25,6 +25,7 @@ describe('E2E Tests for MCMP', function(){
         expect(await catalogPage.getTitleText()).toBe(catalogPageJson.titleText);
         await catalogPage.selectProvider(ec2Json.provider);
         await catalogPage.selectCategory(ec2Json.category);
+        await catalogPage.searchTemplate(ec2Json.bluePrintName);
         await catalogPage.clickOnTemplateCard(ec2Json.bluePrintName);
         expect(await catalogPage.getCurrentBreadcrumbText()).toBe(catalogPageJson.catalogDetailsBreadcrumbText);
         expect(await catalogPage.getTemplateTitleText()).toBe(ec2Json.bluePrintName);

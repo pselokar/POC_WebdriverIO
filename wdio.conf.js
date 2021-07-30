@@ -95,6 +95,11 @@ exports.config = {
         maxInstances: 1,
         //
         browserName: 'chrome',
+        'goog:chromeOptions': {
+            // to run chrome headless the following flags are required
+            args: ['--headless', '--disable-gpu'],
+        },
+        
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
@@ -260,10 +265,8 @@ exports.config = {
      before: async function () {
         var appUtils = require("./common-utils/appUtils.js");
         var launchBrowser = require("./helpers/onPrepare.js");        
-        var reportsPath = "./reports";   
         var allurereportsPath = "./allure-report";
-        var allureresultsPath = "./allure-results";
-        await appUtils.clearDirectory(reportsPath);   
+        var allureresultsPath = "./allure-results";  
         await appUtils.clearDirectory(allurereportsPath); 
         await appUtils.clearDirectory(allureresultsPath); 
         await launchBrowser.ensureConsumeHome();
