@@ -1,3 +1,4 @@
+const fs = require('fs');
 var logGenerator = require("../common-utils/logGenerator.js"),
     logger = logGenerator.getApplicationLogger();
 
@@ -47,10 +48,30 @@ async function switchToDefaultContent(){
 	return randomText;
 }
 
+/**
+ * This function clears a non empty directory/folder
+ */
+
+async function clearDirectory(dirPath) {
+    // directory path
+    const dir = dirPath;
+    
+    // delete directory recursively
+    fs.rmdir(dir, { recursive: true }, (err) => {
+        if (err) {
+            throw err;
+        }
+    
+        console.log(`${dir} is deleted!`);
+    });
+    
+}
+
 module.exports = {
     navigateToBaseUrl : navigateToBaseUrl,
     navigateToUrl : navigateToUrl,
     switchToFrameById: switchToFrameById,
     switchToDefaultContent: switchToDefaultContent,
-    getRandomString: getRandomString
+    getRandomString: getRandomString,
+    clearDirectory: clearDirectory
 }
