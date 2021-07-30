@@ -17,7 +17,9 @@
     "@wdio/spec-reporter": "^7.7.3",
     "local-runner": "^0.1.1-alpha",
     "wdio-slack-service": "^2.0.9",
-    "webdriverio": "^7.7.4"
+    "webdriverio": "^7.7.4",
+    "request": "latest",
+    "request-promise": "^4.2.2"
   },
   "dependencies": {
     "@wdio/cli": "^7.7.4",
