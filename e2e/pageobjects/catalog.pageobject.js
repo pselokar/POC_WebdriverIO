@@ -39,7 +39,7 @@ catalogPage.prototype.open = async function(){
 catalogPage.prototype.getTitleText = async function(){
     await appUtils.switchToFrameById("mcmp-iframe");
     const titleText = await $(this.titleTextCss);
-    await titleText.waitForDisplayed({ timeout: 30000 });
+    await titleText.waitForDisplayed({ timeout: 60000 });
     return await titleText.getText().then(function(text){
         logger.info("Title text for Catalog page: '"+text.trim()+"'");
         return text.trim();
@@ -106,6 +106,7 @@ catalogPage.prototype.clickOnTemplateCard = async function(templateName){
             await templateCard.waitForClickable({ timeout: 60000 });
             return await templateCard.click().then(function(){
                 logger.info("Clicked on template : '"+templateName+"'");
+                return;
             });
         }
     });

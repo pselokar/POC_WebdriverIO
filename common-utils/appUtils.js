@@ -62,7 +62,7 @@ async function clearDirectory(dirPath) {
             throw err;
         }
     
-        console.log(`${dir} is deleted!`);
+        logger.info(`${dir} is deleted!`);
     });
     
 }
