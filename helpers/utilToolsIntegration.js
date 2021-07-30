@@ -128,7 +128,6 @@ global.postToSlack = function (){
 
 module.exports = {
     postToSlack : postToSlack,
-    generateHTMLReport:generateHTMLReport,
     setSuiteName:setSuiteName
 };
 
