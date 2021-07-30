@@ -9,7 +9,10 @@ var browser = process.env.Browser,
 	username = process.env.Email,
 	password = process.env.Password,
 	isProvisioningRequired = process.env.isProvisioningRequired,
-	isDummyAdapterDisabled = process.env.isDummyAdapterDisabled
+	isDummyAdapterDisabled = process.env.isDummyAdapterDisabled,
+    postSlack = process.env.POST_TO_SLACK,
+	postSlackWebhookURL = "https://hooks.slack.com/services/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"
+
 
 if(browser == null)
 browser = "chrome"
@@ -23,9 +26,25 @@ if(isProvisioningRequired == null)
 isProvisioningRequired = "true";
 if(isDummyAdapterDisabled == null)
 isDummyAdapterDisabled = "false";
+if(postSlack == null)
+postSlack = "true";
+if (postSlackWebhookURL == null)
+postSlackWebhookURL = "https://hooks.slack.com/services/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"
 
 exports.config = {
-    //
+
+    //=====================
+    // parameters
+    //=====================
+
+    params: {
+    url: "https://"+environment,
+	postSlack: postSlack,
+	isProvisioningRequired : isProvisioningRequired,
+	isDummyAdapterDisabled:isDummyAdapterDisabled,
+	postSlackWebhookURL : postSlackWebhookURL,
+    },
+    
     // ====================
     // Runner Configuration
     // ====================
@@ -154,7 +173,7 @@ exports.config = {
         }
         ],
         [slack, {
-        webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
+        //webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
         notifyOnlyOnFailure: false, // Send notification only on test failure
         messageTitle: "Webdriverio execution results"+" =============================="+
         "App URL: "+ environment, // Name of the notification
@@ -260,6 +279,7 @@ exports.config = {
         logger.info("Username: "+username);
         logger.info("Provisioning: "+isProvisioningRequired);
         logger.info("isDummyAdapterDisabled: "+isDummyAdapterDisabled);
+        logger.info("Post to Slack: "+postSlack);
         logger.info("*******************************************");
 
         var appUtils = require("./common-utils/appUtils.js");
@@ -271,7 +291,6 @@ exports.config = {
         await appUtils.clearDirectory(allurereportsPath); 
         await appUtils.clearDirectory(allureresultsPath); 
         await launchBrowser.ensureConsumeHome();
-        
     },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -362,7 +381,11 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-     onComplete: function() {
+     onComplete: async function() {
+        var reportGenerator = require('./helpers/utilToolsIntegration.js');
+    // Set suite name to 'UIAuto' in 'junitresults.xml'
+        await setSuiteName("UIAuto");
+        await postToSlack();
         const reportError = new Error('Could not generate Allure report');
         const generation = allure(['generate', 'allure-results', '--clean']);
         return new Promise((resolve, reject) => {
