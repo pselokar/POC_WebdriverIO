@@ -31,16 +31,6 @@ postSlack = "true";
 if (postSlackWebhookURL == null)
 postSlackWebhookURL = "https://hooks.slack.com/services/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"
 
-
-console.log("******Printing Environment Variables*******")
-console.log("Test browser: "+browser)
-console.log("Test environment: "+environment)
-console.log("Username: "+username)
-console.log("Provisioning: "+isProvisioningRequired)
-console.log("isDummyAdapterDisabled: "+isDummyAdapterDisabled)
-logger.info("Post to Slack: "+postSlack)
-console.log("*******************************************")
-
 exports.config = {
 
     //=====================
@@ -117,7 +107,7 @@ exports.config = {
         browserName: 'chrome',
         'goog:chromeOptions': {
             // to run chrome headless the following flags are required
-            args: ['--headless', '--disable-gpu'],
+            args: ['--headless', '--disable-gpu', '--window-size=1920,1080', 'disable-extensions','--test-type','--no-sandbox'],
         },
         
         acceptInsecureCerts: true
@@ -230,7 +220,7 @@ exports.config = {
     // Options to be passed to Jasmine.
     jasmineOpts: {
         // Jasmine default timeout
-        defaultTimeoutInterval: 240000,
+        defaultTimeoutInterval: 300000,
         //
         // The Jasmine framework allows interception of each assertion in order to log the state of the application
         // or website depending on the result. For example, it is pretty handy to take a screenshot every time
@@ -283,14 +273,24 @@ exports.config = {
      * @param {Object}         browser      instance of created browser/device session
      */
      before: async function () {
+        logger.info("******Printing Environment Variables*******");
+        logger.info("Test browser: "+browser);
+        logger.info("Test environment: "+environment);
+        logger.info("Username: "+username);
+        logger.info("Provisioning: "+isProvisioningRequired);
+        logger.info("isDummyAdapterDisabled: "+isDummyAdapterDisabled);
+        logger.info("Post to Slack: "+postSlack);
+        logger.info("*******************************************");
+
         var appUtils = require("./common-utils/appUtils.js");
         var launchBrowser = require("./helpers/onPrepare.js");        
         var allurereportsPath = "./allure-report";
-        var allureresultsPath = "./allure-results";  
+        var allureresultsPath = "./allure-results";
+        var wdioLogsPath = "./wdio-logs";
+        await appUtils.clearDirectory(wdioLogsPath);
         await appUtils.clearDirectory(allurereportsPath); 
         await appUtils.clearDirectory(allureresultsPath); 
         await launchBrowser.ensureConsumeHome();
-        
     },
     /**
      * Runs before a WebdriverIO command gets executed.

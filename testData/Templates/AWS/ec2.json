@@ -3,6 +3,12 @@
     "descriptiveText": "The Amazon Elastic Compute Cloud (EC2) service creates virtual computers in the cloud. Users create, access, and terminate these computers as needed, paying for only the compute capacity used.",
     "provider": "Amazon",
     "category": "Compute",
+    "startingPrice": "USD 0.0058/ Size / Hr + USD 0.00",
+    "serviceInstancePrefixLabel": "Service Instance Prefix",
+    "teamLabel": "Team",
+    "providerAccLabel": "Provider Account",
+    "totalMonthlyCost": "USD 18.4512",
+    "approvalProcessedMsg": "Approval Processed",
     "Order Parameters": {
       "Main Parameters": {
         "Service Instance Prefix": {

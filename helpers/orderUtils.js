@@ -28,48 +28,48 @@ async function fillOrderDetails(jsonTemplate, modifiedParamMap) {
                     await textbox.scrollIntoView();
                     await textbox.clearValue().then(async function(){
                         await textbox.setValue(elementValue).then(function(){
-                            logger.info("Entered " + elementValue + " in " + fieldName + " textbox");
+                            logger.info("Entered '" + elementValue + "' in '" + fieldName + "' textbox");
                         });
                     });
                 }
                 if(elementType == "RadioButton"){
                     var locator = "[for='"+ elementID +"']";
                     const radioButton = await $(locator);
-                    await radioButton.waitForEnabled({ timeout: 60000 });
+                    await radioButton.waitForClickable({ timeout: 60000 });
                     await radioButton.scrollIntoView();
                     await radioButton.click().then(function(){
-                        logger.info("Selected " + elementValue + " radio button for " + fieldName);
+                        logger.info("Selected '" + elementValue + "' radio button for '" + fieldName + "'");
                     });
                 }
                 if(elementType == "DropdownSearch"){
                     var dropdownBtnLoc = "#"+elementID+" button.bx--dropdown-text";
                     const dropdownBtn = await $(dropdownBtnLoc);
-                    await dropdownBtn.waitForEnabled({ timeout: 60000 });
+                    await dropdownBtn.waitForClickable({ timeout: 60000 });
                     await dropdownBtn.scrollIntoView();
                     await dropdownBtn.click().then(async function(){
-                        logger.info("Clicked on "+fieldName+" dropdown button..");
+                        logger.info("Clicked on '"+fieldName+"' dropdown button..");
                         var dropdownValueLoc = "//*[@id='"+elementID+"']//li/button[normalize-space()='"+elementValue+"']";
                         const dropdownValue = await $(dropdownValueLoc);
-                        await dropdownValue.waitForDisplayed({ timeout: 60000 });
+                        await dropdownValue.waitForClickable({ timeout: 60000 });
                         await dropdownValue.scrollIntoView();
                         await dropdownValue.click().then(function(){
-                            logger.info("Selected "+elementValue+" from "+fieldName+" dropdown");
+                            logger.info("Selected '"+elementValue+"' from '"+fieldName+"' dropdown");
                         });
                     });
                 }
                 if(elementType == "Dropdown"){
                     var dropdownBtnLoc = "[id='"+elementID+"'] > button";
                     const dropdownBtn = await $(dropdownBtnLoc);
-                    await dropdownBtn.waitForEnabled({ timeout: 60000 });
+                    await dropdownBtn.waitForClickable({ timeout: 60000 });
                     await dropdownBtn.scrollIntoView();
                     await dropdownBtn.click().then(async function(){
-                        logger.info("Clicked on "+fieldName+" dropdown button..");
+                        logger.info("Clicked on '"+fieldName+"' dropdown button..");
                         var dropdownValueLoc = "//*[@id='"+elementID+"']//li/button[normalize-space()='"+elementValue+"']";
                         const dropdownValue = await $(dropdownValueLoc);
-                        await dropdownValue.waitForDisplayed({ timeout: 60000 });
+                        await dropdownValue.waitForClickable({ timeout: 60000 });
                         await dropdownValue.scrollIntoView();
                         await dropdownValue.click().then(function(){
-                            logger.info("Selected "+elementValue+" from "+fieldName+" dropdown");
+                            logger.info("Selected '"+elementValue+"' from '"+fieldName+"' dropdown");
                         });
                     });
                 }
@@ -80,14 +80,14 @@ async function fillOrderDetails(jsonTemplate, modifiedParamMap) {
                     await textbox.scrollIntoView();
                     await textbox.clearValue().then(async function(){
                         await textbox.setValue(elementValue).then(async function(){
-                            logger.info("Searching " + elementValue + " in " + fieldName + " textbox");
+                            logger.info("Searching '" + elementValue + "' in '" + fieldName + "' textbox");
                             var searchedOptions = "//*[@id='"+elementID+"']//button[@class='bx--dropdown-link']";
                             // Click first option from the list
                             const searchOption = await $(searchedOptions);
-                            await searchOption.waitForDisplayed({ timeout: 60000 });
+                            await searchOption.waitForClickable({ timeout: 60000 });
                             await searchOption.scrollIntoView();
                             searchOption.click().then(function(){
-                                logger.info("Selected first value from "+fieldName);
+                                logger.info("Selected first value from '"+fieldName+"'");
                             });
                         });
                     });
