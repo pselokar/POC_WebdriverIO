@@ -382,10 +382,6 @@ exports.config = {
      * @param {<Object>} results object containing test results
      */
      onComplete: async function() {
-        var reportGenerator = require('./helpers/utilToolsIntegration.js');
-    // Set suite name to 'UIAuto' in 'junitresults.xml'
-        await setSuiteName("UIAuto");
-        await postToSlack();
         const reportError = new Error('Could not generate Allure report');
         const generation = allure(['generate', 'allure-results', '--clean']);
         return new Promise((resolve, reject) => {
@@ -403,6 +399,10 @@ exports.config = {
                 logger.info('Allure report successfully generated');
                 resolve();
             });
+        var reportGenerator = require('./helpers/utilToolsIntegration.js');
+        //Set suite name to 'UIAuto' in 'junitresults.xml'
+        reportGenerator.setSuiteName("UIAuto");
+        reportGenerator.postToSlack();
         });
     }
     /**
