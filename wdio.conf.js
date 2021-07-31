@@ -52,6 +52,8 @@ exports.config = {
     // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
     // on a remote machine).
     runner: 'local',
+    // hostname:'localhost',
+    // port: '4444',
     //
     // ==================
     // Specify Test Files
@@ -69,7 +71,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './e2e/specs/e2eFlow.spec.js'
+        './e2e/specs/login.spec.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -107,9 +109,9 @@ exports.config = {
         browserName: 'chrome',
         'goog:chromeOptions': {
             // to run chrome headless the following flags are required
-            args: ['--headless', '--disable-gpu', '--window-size=1920,1080', 'disable-extensions','--test-type','--no-sandbox'],
+            args: ['--headless', '--disable-gpu'],
         },
-        
+
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
@@ -172,12 +174,12 @@ exports.config = {
             },
         }
         ],
-        [slack, {
-        //webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
-        notifyOnlyOnFailure: false, // Send notification only on test failure
-        messageTitle: "Webdriverio execution results"+" =============================="+
-        "App URL: "+ environment, // Name of the notification
-        }]
+        // [slack, {
+        // //webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
+        // notifyOnlyOnFailure: false, // Send notification only on test failure
+        // messageTitle: "Webdriverio execution results"+" =============================="+
+        // "App URL: "+ environment, // Name of the notification
+        // }]
     ],  
     
     // Framework you want to run your specs with.
