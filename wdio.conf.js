@@ -170,7 +170,7 @@ exports.config = {
         { drivers: { firefox: '0.29.1', chrome: 'latest', chromiumedge: 'latest' } },
             {args: {
             version: "3.141.59",
-            seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
+            //seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
             },
         }
         ],
@@ -403,8 +403,8 @@ exports.config = {
             });
         var reportGenerator = require('./helpers/utilToolsIntegration.js');
         //Set suite name to 'UIAuto' in 'junitresults.xml'
-        reportGenerator.setSuiteName("UIAuto");
-        reportGenerator.postToSlack();
+        //reportGenerator.setSuiteName("UIAuto");
+        //reportGenerator.postToSlack();
         });
     }
     /**
