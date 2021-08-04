@@ -403,8 +403,8 @@ exports.config = {
             });
         var reportGenerator = require('./helpers/utilToolsIntegration.js');
         //Set suite name to 'UIAuto' in 'junitresults.xml'
-        //reportGenerator.setSuiteName("UIAuto");
-        //reportGenerator.postToSlack();
+        reportGenerator.setSuiteName("UIAuto");
+        reportGenerator.postToSlack();
         });
     }
     /**

@@ -4,3 +4,4 @@ allure-report
 /application.log*
 wdio-logs
 reports
+package-lock.json
