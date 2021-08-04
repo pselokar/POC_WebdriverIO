@@ -4,7 +4,7 @@
   "description": "This is webdriverio practise",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine specs/login.spec.js"
+    "test": "jasmine"
   },
   "author": "Padmakar Selokar",
   "license": "ISC",
