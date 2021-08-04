@@ -1,4 +1,4 @@
-var httpRequest = require('request-promise');
+//var httpRequest = require('request-promise');
 const fs = require('fs');
 var xml2js = require('xml2js');
 var logGenerator = require("../common-utils/logGenerator.js"),
