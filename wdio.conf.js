@@ -167,7 +167,7 @@ exports.config = {
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
     services: [ ['selenium-standalone', 
-        { drivers: { firefox: '0.29.1', chrome: '92.0.4515.107', chromiumedge: 'latest' } },
+        { drivers: { firefox: '0.29.1', chrome: 'latest', chromiumedge: 'latest' } },
             {args: {
             version: "3.141.59",
             seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
