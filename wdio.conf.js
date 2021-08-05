@@ -166,14 +166,14 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: [ ['selenium-standalone', 
-        { drivers: { firefox: '0.29.1', chrome: 'latest', chromiumedge: 'latest' } },
-            {args: {
-            version: "3.141.59",
-            seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
-            },
-        }
-        ],
+    services: [ ['selenium-standalone'],
+        // { drivers: { firefox: '0.29.1', chrome: 'latest', chromiumedge: 'latest' } },
+        //     {args: {
+        //     version: "3.141.59",
+        //     seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
+        //     },
+        // }
+        //],
         [slack, {
         //webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
         notifyOnlyOnFailure: false, // Send notification only on test failure
