@@ -175,7 +175,7 @@ exports.config = {
         // }
         //],
         [slack, {
-        //webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
+        webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
         notifyOnlyOnFailure: false, // Send notification only on test failure
         messageTitle: "Webdriverio execution results"+" =============================="+
         "App URL: "+ environment, // Name of the notification
