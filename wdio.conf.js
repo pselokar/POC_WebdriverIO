@@ -174,12 +174,12 @@ exports.config = {
             },
         }
         ],
-        // [slack, {
-        // //webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
-        // notifyOnlyOnFailure: false, // Send notification only on test failure
-        // messageTitle: "Webdriverio execution results"+" =============================="+
-        // "App URL: "+ environment, // Name of the notification
-        // }]
+        [slack, {
+        //webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
+        notifyOnlyOnFailure: false, // Send notification only on test failure
+        messageTitle: "Webdriverio execution results"+" =============================="+
+        "App URL: "+ environment, // Name of the notification
+        }]
     ],  
     
     // Framework you want to run your specs with.
@@ -284,14 +284,14 @@ exports.config = {
         logger.info("Post to Slack: "+postSlack);
         logger.info("*******************************************");
 
-        var appUtils = require("./common-utils/appUtils.js");
+        //var appUtils = require("./common-utils/appUtils.js");
         var launchBrowser = require("./helpers/onPrepare.js");        
-        var allurereportsPath = "./allure-report";
-        var allureresultsPath = "./allure-results";
-        var wdioLogsPath = "./wdio-logs";
-        await appUtils.clearDirectory(wdioLogsPath);
-        await appUtils.clearDirectory(allurereportsPath); 
-        await appUtils.clearDirectory(allureresultsPath); 
+        // var allurereportsPath = "./allure-report";
+        // var allureresultsPath = "./allure-results";
+        // var wdioLogsPath = "./wdio-logs";
+        // await appUtils.clearDirectory(wdioLogsPath);
+        // await appUtils.clearDirectory(allurereportsPath); 
+        // await appUtils.clearDirectory(allureresultsPath); 
         await launchBrowser.ensureConsumeHome();
     },
     /**
@@ -401,10 +401,6 @@ exports.config = {
                 logger.info('Allure report successfully generated');
                 resolve();
             });
-        var reportGenerator = require('./helpers/utilToolsIntegration.js');
-        //Set suite name to 'UIAuto' in 'junitresults.xml'
-        reportGenerator.setSuiteName("UIAuto");
-        reportGenerator.postToSlack();
         });
     }
     /**
