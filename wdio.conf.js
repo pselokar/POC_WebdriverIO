@@ -327,14 +327,15 @@ exports.config = {
      * Hook that gets executed before the suite starts
      * @param {Object} suite suite details
      */
-    beforeSuite: async function (suite) {
-        await launchBrowser.ensureConsumeHome();
-    },
+    // beforeSuite: async function () {
+       
+    // },
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
-    // beforeTest: function (test, context) {
-    // },
+    beforeTest: async function () {
+        await launchBrowser.ensureConsumeHome();
+    },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
