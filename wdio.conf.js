@@ -32,8 +32,8 @@ if (postSlackWebhookURL == null)
 postSlackWebhookURL = "https://hooks.slack.com/services/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"
 
 exports.config = {
-    user: 'utkarshhonparkhe_g1O38H',
-    key: 'G5Kempg2f1z78yzpvXQs',
+    // user: 'utkarshhonparkhe_g1O38H',
+    // key: 'G5Kempg2f1z78yzpvXQs',
 
     seleniumAddress: 'http://localhost:4444/wd/hub',
     allScriptsTimeout: 900000,
@@ -137,7 +137,7 @@ exports.config = {
     waitforTimeout: 30000,
     connectionRetryTimeout: 90000,
     connectionRetryCount: 3,
-    host: 'hub.browserstack.com',
+    //host: 'hub.browserstack.com',
     //
     // Set specific log levels per logger
     // loggers:
