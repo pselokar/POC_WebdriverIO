@@ -7,11 +7,13 @@ var ordersPageJson =  require("../../testData/ordersPage.json");
 
 describe('Sanity Tests for MCMP', function(){
     
-    beforeAll(async function(){
-        expect(await launchpadPage.getMCMPHeaderTitle()).toBe(launchpadPageJson.mcmpHeaderText);
-    });
+    // beforeAll(async function(){
+    //     browser.pause(5000);
+        
+    // });
 
     it('Go to Catalog page', async function(){
+        expect(await launchpadPage.getMCMPHeaderTitle()).toBe(launchpadPageJson.mcmpHeaderText);
         await catalogPage.open();
         expect(await catalogPage.getTitleText()).toBe(catalogPageJson.titleText);
     });
