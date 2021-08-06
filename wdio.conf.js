@@ -59,8 +59,8 @@ exports.config = {
     // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
     // on a remote machine).
     runner: 'local',
-    hostname:'localhost',
-    port: '4444',
+    // hostname:'localhost',
+    // port: '4444',
     //
     // ==================
     // Specify Test Files
@@ -179,11 +179,11 @@ exports.config = {
     // commands. Instead, they hook themselves up into the test process.
     services: [ ['selenium-standalone',
         { drivers: { firefox: '0.29.1', chrome: 'latest', chromiumedge: 'latest' } },
-            {args: {
-            version: "3.141.59",
-            seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
-            },
-        }
+        //     {args: {
+        //     version: "3.141.59",
+        //     seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
+        //     },
+        // }
         ],],
     // services: [ ['selenium-standalone'],
     //     [slack, {
