@@ -5,7 +5,7 @@ var logGenerator = require("../common-utils/logGenerator.js"),
 // Navigate to Base URL
 async function navigateToBaseUrl(){
     await browser.url("/");
-    await browser.maximizeWindow();
+    //await browser.maximizeWindow();
     logger.info("Navigated to baseurl..");
 }
 
