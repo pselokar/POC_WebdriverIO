@@ -306,8 +306,7 @@ exports.config = {
         logger.info("Post to Slack: "+postSlack);
         logger.info("*******************************************");
 
-        var appUtils = require("./common-utils/appUtils.js");
-        var launchBrowser = require("./helpers/onPrepare.js");        
+        var appUtils = require("./common-utils/appUtils.js");       
         var allurereportsPath = "./allure-report";
         var allureresultsPath = "./allure-results";
         var wdioLogsPath = "./wdio-logs";
@@ -334,6 +333,7 @@ exports.config = {
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
     beforeTest: async function () {
+        var launchBrowser = require("./helpers/onPrepare.js"); 
         await launchBrowser.ensureConsumeHome();
     },
     /**
