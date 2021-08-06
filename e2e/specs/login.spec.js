@@ -9,9 +9,9 @@ var appUtils = require("../../common-utils/appUtils.js");
 
 describe('Sanity Tests for MCMP', function(){
     
-    beforeAll(async function(){
-        expect(await launchpadPage.getMCMPHeaderTitle()).toBe(launchpadPageJson.mcmpHeaderText);
-    });
+    // beforeAll(async function(){
+    //     expect(await launchpadPage.getMCMPHeaderTitle()).toBe(launchpadPageJson.mcmpHeaderText);
+    // });
 
     it('Go to Catalog page', async function(){
         await catalogPage.open();
