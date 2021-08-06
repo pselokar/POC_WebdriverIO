@@ -73,7 +73,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './e2e/specs/e2eFlow.spec.js'
+        './e2e/specs/login.spec.js'
     ],
     // Patterns to exclude.
     exclude: [
