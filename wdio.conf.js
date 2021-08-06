@@ -35,6 +35,11 @@ exports.config = {
     user: 'utkarshhonparkhe_g1O38H',
     key: 'G5Kempg2f1z78yzpvXQs',
 
+    seleniumAddress: 'http://localhost:4444/wd/hub',
+    allScriptsTimeout: 900000,
+    useAllAngular2AppRoots: true,
+    directConnect: true,
+
     //=====================
     // parameters
     //=====================
@@ -180,14 +185,14 @@ exports.config = {
     //         },
     //     }
     //     ],
-    services: [ ['browserstack'],
-        [slack, {
-        webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
-        notifyOnlyOnFailure: false, // Send notification only on test failure
-        messageTitle: "Webdriverio execution results"+" =============================="+
-        "App URL: "+ environment, // Name of the notification
-        }]
-    ],  
+    // services: [ ['selenium-standalone'],
+    //     [slack, {
+    //     webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
+    //     notifyOnlyOnFailure: false, // Send notification only on test failure
+    //     messageTitle: "Webdriverio execution results"+" =============================="+
+    //     "App URL: "+ environment, // Name of the notification
+    //     }]
+    // ],  
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -196,6 +201,16 @@ exports.config = {
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
     framework: 'jasmine',
+    jasmineNodeOpts: {
+        onComplete: null,
+        isVerbose: false,
+        showColors: true,
+        includeStackTrace: true,
+        defaultTimeoutInterval : 5400000,
+	//defaultTimeoutInterval : 260000, //15 mins timeout to run a single test
+       // allScriptsTimeout: 20000000,
+        useAllAngular2AppRoots: true
+    },
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -291,14 +306,14 @@ exports.config = {
         logger.info("Post to Slack: "+postSlack);
         logger.info("*******************************************");
 
-        //var appUtils = require("./common-utils/appUtils.js");
+        var appUtils = require("./common-utils/appUtils.js");
         var launchBrowser = require("./helpers/onPrepare.js");        
-        // var allurereportsPath = "./allure-report";
-        // var allureresultsPath = "./allure-results";
-        // var wdioLogsPath = "./wdio-logs";
-        // await appUtils.clearDirectory(wdioLogsPath);
-        // await appUtils.clearDirectory(allurereportsPath); 
-        // await appUtils.clearDirectory(allureresultsPath); 
+        var allurereportsPath = "./allure-report";
+        var allureresultsPath = "./allure-results";
+        var wdioLogsPath = "./wdio-logs";
+        await appUtils.clearDirectory(wdioLogsPath);
+        await appUtils.clearDirectory(allurereportsPath); 
+        await appUtils.clearDirectory(allureresultsPath); 
         await launchBrowser.ensureConsumeHome();
     },
     /**
