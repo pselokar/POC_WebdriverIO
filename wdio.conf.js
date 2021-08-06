@@ -327,7 +327,7 @@ exports.config = {
      * Hook that gets executed before the suite starts
      * @param {Object} suite suite details
      */
-    beforeSuite: function (suite) {
+    beforeSuite: async function (suite) {
         await launchBrowser.ensureConsumeHome();
     },
     /**
