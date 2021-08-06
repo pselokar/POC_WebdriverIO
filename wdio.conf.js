@@ -314,7 +314,7 @@ exports.config = {
         await appUtils.clearDirectory(wdioLogsPath);
         await appUtils.clearDirectory(allurereportsPath); 
         await appUtils.clearDirectory(allureresultsPath); 
-        await launchBrowser.ensureConsumeHome();
+        //await launchBrowser.ensureConsumeHome();
     },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -327,8 +327,9 @@ exports.config = {
      * Hook that gets executed before the suite starts
      * @param {Object} suite suite details
      */
-    // beforeSuite: function (suite) {
-    // },
+    beforeSuite: function (suite) {
+        await launchBrowser.ensureConsumeHome();
+    },
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
