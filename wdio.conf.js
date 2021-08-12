@@ -32,6 +32,10 @@ if (postSlackWebhookURL == null)
 postSlackWebhookURL = "https://hooks.slack.com/services/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"
 
 exports.config = {
+    seleniumAddress: 'http://localhost:4444/wd/hub',
+    allScriptsTimeout: 900000,
+    useAllAngular2AppRoots: true,
+    directConnect: true,
 
     //=====================
     // parameters
@@ -52,9 +56,7 @@ exports.config = {
     // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
     // on a remote machine).
     runner: 'local',
-    // hostname:'localhost',
-    // port: '4444',
-    //
+    
     // ==================
     // Specify Test Files
     // ==================
@@ -71,7 +73,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './e2e/specs/e2eFlow.spec.js'
+        './e2e/specs/login.spec.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -127,7 +129,10 @@ exports.config = {
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     logLevel: 'info',
     outputDir: 'wdio-logs',
-    //
+    waitforTimeout: 30000,
+    connectionRetryTimeout: 90000,
+    connectionRetryCount: 3,
+    
     // Set specific log levels per logger
     // loggers:
     // - webdriver, webdriverio
@@ -166,21 +171,22 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: [ ['selenium-standalone', 
-        { drivers: { firefox: '0.29.1', chrome: '92.0.4515.107', chromiumedge: 'latest' } },
-            {args: {
-            version: "3.141.59",
-            seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
-            },
-        }
-        ],
-        // [slack, {
-        // //webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
-        // notifyOnlyOnFailure: false, // Send notification only on test failure
-        // messageTitle: "Webdriverio execution results"+" =============================="+
-        // "App URL: "+ environment, // Name of the notification
-        // }]
-    ],  
+    //services: [ ['selenium-standalone'
+        //{ drivers: { firefox: '0.29.1', chrome: 'latest', chromiumedge: 'latest' } },
+        //     {args: {
+        //     version: "3.141.59",
+        //     seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
+        //     },
+        // }
+       // ],],
+    // services: [ ['selenium-standalone'],
+    //     [slack, {
+    //     webHookUrl: "https://hooks.slack.com/services/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", // Used to post notification to a particular channel
+    //     notifyOnlyOnFailure: false, // Send notification only on test failure
+    //     messageTitle: "Webdriverio execution results"+" =============================="+
+    //     "App URL: "+ environment, // Name of the notification
+    //     }]
+    // ],  
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -189,6 +195,16 @@ exports.config = {
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
     framework: 'jasmine',
+    jasmineNodeOpts: {
+        onComplete: null,
+        isVerbose: false,
+        showColors: true,
+        includeStackTrace: true,
+        defaultTimeoutInterval : 5400000,
+	//defaultTimeoutInterval : 260000, //15 mins timeout to run a single test
+       // allScriptsTimeout: 20000000,
+        useAllAngular2AppRoots: true
+    },
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -284,15 +300,13 @@ exports.config = {
         logger.info("Post to Slack: "+postSlack);
         logger.info("*******************************************");
 
-        var appUtils = require("./common-utils/appUtils.js");
-        var launchBrowser = require("./helpers/onPrepare.js");        
+        var appUtils = require("./common-utils/appUtils.js");       
         var allurereportsPath = "./allure-report";
         var allureresultsPath = "./allure-results";
         var wdioLogsPath = "./wdio-logs";
         await appUtils.clearDirectory(wdioLogsPath);
         await appUtils.clearDirectory(allurereportsPath); 
         await appUtils.clearDirectory(allureresultsPath); 
-        await launchBrowser.ensureConsumeHome();
     },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -305,13 +319,16 @@ exports.config = {
      * Hook that gets executed before the suite starts
      * @param {Object} suite suite details
      */
-    // beforeSuite: function (suite) {
+    // beforeSuite: async function () {
+       
     // },
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
-    // beforeTest: function (test, context) {
-    // },
+    beforeTest: async function () {
+        var launchBrowser = require("./helpers/onPrepare.js"); 
+        await launchBrowser.ensureConsumeHome();
+    },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
@@ -401,10 +418,6 @@ exports.config = {
                 logger.info('Allure report successfully generated');
                 resolve();
             });
-        var reportGenerator = require('./helpers/utilToolsIntegration.js');
-        //Set suite name to 'UIAuto' in 'junitresults.xml'
-        reportGenerator.setSuiteName("UIAuto");
-        reportGenerator.postToSlack();
         });
     }
     /**

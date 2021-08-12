@@ -1,10 +1,10 @@
 {
   "name": "webdriver-io",
   "version": "1.0.0",
-  "description": "This is webdriverio practise",
+  "description": "This is webdriverio practice",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "wdio"
   },
   "author": "Padmakar Selokar",
   "license": "ISC",
@@ -16,8 +16,6 @@
     "@wdio/selenium-standalone-service": "^7.8.0",
     "@wdio/spec-reporter": "^7.7.3",
     "local-runner": "^0.1.1-alpha",
-    "request": "latest",
-    "request-promise": "^4.2.2",
     "wdio-slack-service": "^2.0.9",
     "webdriver-manager": "^12.0.6",
     "webdriverio": "^7.7.4"
