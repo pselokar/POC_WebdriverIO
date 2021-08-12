@@ -47,7 +47,7 @@ Repository for WebdriverIO UI test automation POC. <br>
 4. To add new json file, to use in your tests, add new json file in **```testData/```** folder. <br>
 5. To add new helper utilities, add new js file in **```helpers/```** folder. <br>
 6. To add new common utilities, add new js file in **```common-utils/```** folder. <br>
-7. To make any changes in configuration of services, check the different options provided in **wdio.conf.js**. <br>
+7. To make any changes in configuration of services, check the different options provided in **```wdio.conf.js```**. <br>
 
 ## Running the tests
 1. Open terminal and go to root folder of this repository. <br>
