@@ -2,8 +2,8 @@
 Repository for WebdriverIO UI test automation POC. <br>
 
 ## Install Dependencies:
-1. Install NodeJS at least **v12.16.1** or higher, as this is the oldest active LTS version <br>
-2. **npm** will get installed with npm only <br>
+1. Install **NodeJS** at least **```v12.16.1```** or higher, as this is the oldest active LTS version <br>
+2. **npm** will get installed with NodeJS installation only <br>
 3. Install the following package <br>
     **webdriverio** - Webdriver package to run tests. **```npm i --save-dev webdriverio```** <br>
     **@wdio-cli** - Webdriverio Client package to run configure other wdio packages. **```npm i --save-dev @wdio/cli```** <br>
@@ -51,7 +51,7 @@ Repository for WebdriverIO UI test automation POC. <br>
 
 ## Running the tests
 1. Open terminal and go to root folder of this repository. <br>
-2. Open this repo in any edior oof your choice. <br>
+2. Open this repo in any editor of your choice. <br>
 3. Go to **wdio.conf.js** and edit following things: <br>
     1. **specs** --> Specify the path of the spec file you want to run. <br>
     2. **baseUrl** --> Specify the baseurl for your application. <br>
